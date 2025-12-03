@@ -1,0 +1,196 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Flight Info Service
+  flight-info-db:
+    image: postgres:15
+    container_name: flight-info-db
+    environment:
+      POSTGRES_DB: flight_info_db
+      POSTGRES_USER: flight_user
+      POSTGRES_PASSWORD: flight_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - flight_info_data:/var/lib/postgresql/data
+    networks:
+      - flight-network
+
+  # PostgreSQL Database for Pilot Service
+  pilot-db:
+    image: postgres:15
+    container_name: pilot-db
+    environment:
+      POSTGRES_DB: pilot_db
+      POSTGRES_USER: pilot_user
+      POSTGRES_PASSWORD: pilot_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - pilot_data:/var/lib/postgresql/data
+    networks:
+      - flight-network
+
+  # PostgreSQL Database for Cabin Service
+  cabin-db:
+    image: postgres:15
+    container_name: cabin-db
+    environment:
+      POSTGRES_DB: cabin_db
+      POSTGRES_USER: cabin_user
+      POSTGRES_PASSWORD: cabin_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - cabin_data:/var/lib/postgresql/data
+    networks:
+      - flight-network
+
+  # PostgreSQL Database for Passenger Service
+  passenger-db:
+    image: postgres:15
+    container_name: passenger-db
+    environment:
+      POSTGRES_DB: passenger_db
+      POSTGRES_USER: passenger_user
+      POSTGRES_PASSWORD: passenger_pass
+    ports:
+      - "5435:5432"
+    volumes:
+      - passenger_data:/var/lib/postgresql/data
+    networks:
+      - flight-network
+
+  # PostgreSQL Database for Main System
+  main-db:
+    image: postgres:15
+    container_name: main-db
+    environment:
+      POSTGRES_DB: main_db
+      POSTGRES_USER: main_user
+      POSTGRES_PASSWORD: main_pass
+    ports:
+      - "5436:5432"
+    volumes:
+      - main_data:/var/lib/postgresql/data
+    networks:
+      - flight-network
+
+  # Flight Info Service
+  flight-info-service:
+    build:
+      context: ./services/flight-info-service
+      dockerfile: Dockerfile
+    container_name: flight-info-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://flight-info-db:5432/flight_info_db
+      SPRING_DATASOURCE_USERNAME: flight_user
+      SPRING_DATASOURCE_PASSWORD: flight_pass
+    depends_on:
+      - flight-info-db
+    networks:
+      - flight-network
+
+  # Pilot Service
+  pilot-service:
+    build:
+      context: ./services/pilot-service
+      dockerfile: Dockerfile
+    container_name: pilot-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://pilot-db:5432/pilot_db
+      SPRING_DATASOURCE_USERNAME: pilot_user
+      SPRING_DATASOURCE_PASSWORD: pilot_pass
+    depends_on:
+      - pilot-db
+    networks:
+      - flight-network
+
+  # Cabin Service
+  cabin-service:
+    build:
+      context: ./services/cabin-service
+      dockerfile: Dockerfile
+    container_name: cabin-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cabin-db:5432/cabin_db
+      SPRING_DATASOURCE_USERNAME: cabin_user
+      SPRING_DATASOURCE_PASSWORD: cabin_pass
+    depends_on:
+      - cabin-db
+    networks:
+      - flight-network
+
+  # Passenger Service
+  passenger-service:
+    build:
+      context: ./services/passenger-service
+      dockerfile: Dockerfile
+    container_name: passenger-service
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://passenger-db:5432/passenger_db
+      SPRING_DATASOURCE_USERNAME: passenger_user
+      SPRING_DATASOURCE_PASSWORD: passenger_pass
+    depends_on:
+      - passenger-db
+    networks:
+      - flight-network
+
+  # Main System
+  main-system:
+    build:
+      context: ./main-system
+      dockerfile: Dockerfile
+    container_name: main-system
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://main-db:5432/main_db
+      SPRING_DATASOURCE_USERNAME: main_user
+      SPRING_DATASOURCE_PASSWORD: main_pass
+      FLIGHT_INFO_SERVICE_URL: http://flight-info-service:8081
+      PILOT_SERVICE_URL: http://pilot-service:8082
+      CABIN_SERVICE_URL: http://cabin-service:8083
+      PASSENGER_SERVICE_URL: http://passenger-service:8084
+    depends_on:
+      - main-db
+      - flight-info-service
+      - pilot-service
+      - cabin-service
+      - passenger-service
+    networks:
+      - flight-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:8080
+    depends_on:
+      - main-system
+    networks:
+      - flight-network
+
+volumes:
+  flight_info_data:
+  pilot_data:
+  cabin_data:
+  passenger_data:
+  main_data:
+
+networks:
+  flight-network:
+    driver: bridge

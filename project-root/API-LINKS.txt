@@ -1,0 +1,111 @@
+================================================================================
+                        API ENDPOINT LINKLERI - KOPYALA YAPISTIR
+================================================================================
+
+MAIN SYSTEM (8080)
+================================================================================
+Health:
+http://localhost:8080/api/health
+
+Rosters:
+http://localhost:8080/api/rosters
+http://localhost:8080/api/rosters/new?flightNumber=TK013&databaseType=SQL
+http://localhost:8080/api/rosters/flight/TK001 (not used)
+http://localhost:8080/api/rosters/1
+http://localhost:8080/api/rosters/1/export
+
+Available Crew:
+http://localhost:8080/api/rosters/available-pilots
+http://localhost:8080/api/rosters/available-cabin-crew
+
+Flights:
+http://localhost:8080/api/rosters/flights
+http://localhost:8080/api/rosters/flights/TK001
+
+
+FLIGHT INFO SERVICE (8081)
+================================================================================
+Health:
+http://localhost:8081/api/health
+
+Flights:
+http://localhost:8081/api/flights
+http://localhost:8081/api/flights/TK001
+http://localhost:8081/api/flights/search?sourceAirport=IST&destinationAirport=ESB
+
+Airports:
+http://localhost:8081/api/airports
+http://localhost:8081/api/airports/1
+http://localhost:8081/api/airports/code/IST
+
+Vehicle Types:
+http://localhost:8081/api/vehicle-types
+http://localhost:8081/api/vehicle-types/1
+http://localhost:8081/api/vehicle-types/name/Boeing%20737-800
+
+
+PILOT SERVICE (8082)
+================================================================================
+Health:
+http://localhost:8082/api/health
+
+Pilots:
+http://localhost:8082/api/pilots
+http://localhost:8082/api/pilots/available
+http://localhost:8082/api/pilots/1
+http://localhost:8082/api/pilots/pilot-id/P001
+http://localhost:8082/api/pilots/vehicle-type/Boeing%20737-800
+http://localhost:8082/api/pilots/seniority/SENIOR
+http://localhost:8082/api/pilots/distance/2000
+
+
+CABIN SERVICE (8083)
+================================================================================
+Health:
+http://localhost:8083/api/health
+
+Attendants:
+http://localhost:8083/api/attendants
+http://localhost:8083/api/attendants/available
+http://localhost:8083/api/attendants/1
+http://localhost:8083/api/attendants/attendant-id/A001
+http://localhost:8083/api/attendants/type/CHIEF
+http://localhost:8083/api/attendants/chefs
+http://localhost:8083/api/attendants/chiefs
+http://localhost:8083/api/attendants/regulars
+
+
+PASSENGER SERVICE (8084)
+================================================================================
+Health:
+http://localhost:8084/api/health
+
+Passengers:
+http://localhost:8084/api/passengers
+http://localhost:8084/api/passengers/flight/TK001
+http://localhost:8084/api/passengers/1
+http://localhost:8084/api/passengers/passenger-id/PAX001
+http://localhost:8084/api/passengers/flight/TK001/seat-type/BUSINESS
+http://localhost:8084/api/passengers/flight/TK001/infants
+http://localhost:8084/api/passengers/flight/TK001/unassigned
+http://localhost:8084/api/passengers/flight/TK001/assigned
+
+
+================================================================================
+EN COK KULLANILANLAR:
+================================================================================
+http://localhost:8080/api/rosters
+http://localhost:8081/api/flights
+http://localhost:8082/api/pilots
+http://localhost:8083/api/attendants
+http://localhost:8084/api/passengers
+
+Yeni Roster Olustur:
+http://localhost:8080/api/rosters/new?flightNumber=TK013&databaseType=SQL
+
+Tum Pilotlari Available Yap:
+http://localhost:8082/api/pilots/all/availability?isAvailable=true
+(PUT method ile, browser'da çalışmaz, PowerShell'de test et)
+
+================================================================================
+
