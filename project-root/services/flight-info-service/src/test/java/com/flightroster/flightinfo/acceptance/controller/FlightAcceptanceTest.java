@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -29,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Tests complete user scenarios and business workflows
  */
 @WebMvcTest(FlightController.class)
-@ActiveProfiles("test")
 class FlightAcceptanceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(FlightAcceptanceTest.class);
