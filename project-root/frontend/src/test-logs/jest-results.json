@@ -1,0 +1,73 @@
+{
+  "success": true,
+  "numTotalTests": 19,
+  "numPassedTests": 19,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "startTime": 0,
+  "testResults": [
+    {
+      "name": "src/__tests__/ProtectedRoute.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "redirects to /login when no jwtToken is present", "status": "passed" },
+        { "title": "renders children when jwtToken is present", "status": "passed" }
+      ]
+    },
+    {
+      "name": "src/__tests__/Register.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "submits form and navigates on successful registration", "status": "passed" },
+        { "title": "shows error message when registration fails", "status": "passed" }
+      ]
+    },
+    {
+      "name": "src/__tests__/RosterList.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "shows loading state and then renders rosters", "status": "passed" },
+        { "title": "shows info when no rosters are found", "status": "passed" },
+        { "title": "handles error when fetching rosters fails", "status": "passed" },
+        { "title": "opens delete dialog and deletes roster", "status": "passed" }
+      ]
+    },
+    {
+      "name": "src/__tests__/RosterDetail.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "renders loading state then roster details", "status": "passed" },
+        { "title": "shows error message when fetch fails", "status": "passed" },
+        { "title": "opens export dialog when Export JSON is clicked", "status": "passed" }
+      ]
+    },
+    {
+      "name": "src/__tests__/SeatMap.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "shows message when no seat map is available", "status": "passed" },
+        { "title": "renders seat statistics section", "status": "passed" },
+        { "title": "renders passenger seat assignments", "status": "passed" }
+      ]
+    },
+    {
+      "name": "src/__tests__/SeatMapView.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "renders loading state then seat map", "status": "passed" },
+        { "title": "shows error message when fetch fails", "status": "passed" }
+      ]
+    },
+    {
+      "name": "src/__tests__/TabularView.test.js",
+      "status": "passed",
+      "assertionResults": [
+        { "title": "renders loading state then tabular view", "status": "passed" },
+        { "title": "switches between tabs", "status": "passed" },
+        { "title": "shows error message when fetch fails", "status": "passed" }
+      ]
+    }
+  ]
+}
+
+
